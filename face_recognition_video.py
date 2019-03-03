@@ -70,12 +70,13 @@ process_this_frame = True
 lastMatchedPerson = None
 frame_counter = 0
 people_found = []
-video_scale = 0.15
+video_scale = 0.2
 while True:
     if frame_counter >= 50:
         frame_counter=0
         people_found = []
     frame_counter+=1
+    print(frame_counter)
     #print("Entered while loop")
     # Grab a single frame of video
     ret, frame = video_capture.read()
@@ -127,7 +128,7 @@ while True:
                     print("This is "+name)
                     people_found.append(name)
 
-    process_this_frame = frame_counter%4==1
+    process_this_frame = frame_counter%2==1
 
 
     # Display the results
