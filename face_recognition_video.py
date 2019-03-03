@@ -115,7 +115,7 @@ while True:
 
     # Display the resulting image
     print("Right before displaying video")
-    cv2.imshow('Video', frame)
+    #cv2.imshow('Video', frame)
     print("Right after displaying video")
 
     # Hit 'q' on the keyboard to quit!
@@ -124,4 +124,4 @@ while True:
 
 # Release handle to the webcam
 video_capture.release()
-cv2.destroyAllWindows()
+#cv2.destroyAllWindows()
