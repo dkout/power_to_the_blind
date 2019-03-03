@@ -22,6 +22,7 @@ def speakText(textToSpeak):
 
 # Get a reference to webcam #0 (the default one)
 video_capture = cv2.VideoCapture(0)
+print("Passed video capture initialization")
 
 # Load a sample picture and learn how to recognize it.
 william_image = face_recognition.load_image_file("known_people/Kout.jpg")
@@ -58,6 +59,7 @@ process_this_frame = True
 lastMatchedPerson = None
 
 while True:
+    print("Entered while loop")
     # Grab a single frame of video
     ret, frame = video_capture.read()
 
@@ -112,7 +114,9 @@ while True:
         cv2.putText(frame, name, (left + 6, bottom - 6), font, 1.0, (255, 255, 255), 1)
 
     # Display the resulting image
+    print("Right before displaying video")
     cv2.imshow('Video', frame)
+    print("Right after displaying video")
 
     # Hit 'q' on the keyboard to quit!
     if cv2.waitKey(1) & 0xFF == ord('q'):
