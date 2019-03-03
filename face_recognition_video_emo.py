@@ -13,7 +13,7 @@ engine = pyttsx3.init();
 def speakText(textToSpeak):
 	engine.say(textToSpeak);
 	engine.runAndWait() ;
-video_show=True
+video_show=False
 # SET FALSE IF RUNNING IN RASPBERRY PI
 
 
@@ -121,9 +121,13 @@ while True:
 
                     file = './image_data/image.jpg'
                     cv2.imwrite(file, frame)
+                    cv2.imshow('ImageWindow', cv2.imread(file))
+                    cv2.waitKey()
 
                     feeling_string = model.predict(file)
 
+
+                    print(feeling_string)
                     speakText(name + " is " + relative_location + " of you. They are feeling: " + feeling_string )
                     print("Found "+name)
                     print("Feeling: " + feeling_string)
