@@ -59,12 +59,12 @@ process_this_frame = True
 lastMatchedPerson = None
 
 while True:
-    print("Entered while loop")
+    #print("Entered while loop")
     # Grab a single frame of video
     ret, frame = video_capture.read()
 
     # Resize frame of video to 1/4 size for faster face recognition processing
-    small_frame = cv2.resize(frame, (0, 0), fx=0.1, fy=0.1)
+    small_frame = cv2.resize(frame, (0, 0), fx=0.2, fy=0.2)
 
     # Convert the image from BGR color (which OpenCV uses) to RGB color (which face_recognition uses)
     rgb_small_frame = small_frame[:, :, ::-1]
@@ -77,6 +77,7 @@ while True:
 
         face_names = []
         for face_encoding in face_encodings:
+            print("found face")
             # See if the face is a match for the known face(s)
             matches = face_recognition.compare_faces(known_face_encodings, face_encoding)
             name = "Unknown"
@@ -86,7 +87,7 @@ while True:
                 first_match_index = matches.index(True)
                 name = known_face_names[first_match_index]
                 print("This is "+name)
-                #print("Face locations",face_locations)
+                print("Face locations",face_locations)
                 if name != lastMatchedPerson:
                 	#speakText("I found "+name)
                 	lastMatchedPerson = name
@@ -114,9 +115,8 @@ while True:
         cv2.putText(frame, name, (left + 6, bottom - 6), font, 1.0, (255, 255, 255), 1)
 
     # Display the resulting image
-    print("Right before displaying video")
-    #cv2.imshow('Video', frame)
-    print("Right after displaying video")
+    #cv2.imshow('Video', frame) 
+    # UNCOMMENT THIS LINE ABOVE IF RUNNING IN RASPBERRY PI
 
     # Hit 'q' on the keyboard to quit!
     if cv2.waitKey(1) & 0xFF == ord('q'):
