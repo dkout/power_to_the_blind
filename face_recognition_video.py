@@ -76,14 +76,14 @@ while True:
         frame_counter=0
         people_found = []
     frame_counter+=1
-    print(frame_counter)
+    # print(frame_counter)
     #print("Entered while loop")
     # Grab a single frame of video
     ret, frame = video_capture.read()
 
     #apply frame rotation
-    frame=cv2.transpose(frame)
-    frame=cv2.flip(frame,flipCode=0)
+    # frame=cv2.transpose(frame)
+    # frame=cv2.flip(frame,flipCode=0)
 
 
 
@@ -128,7 +128,7 @@ while True:
                     print("This is "+name)
                     people_found.append(name)
 
-    process_this_frame = frame_counter%2==1
+    process_this_frame = frame_counter%5==1
 
 
     # Display the results
