@@ -24,7 +24,7 @@ def speakText(textToSpeak):
 video_capture = cv2.VideoCapture(0)
 
 # Load a sample picture and learn how to recognize it.
-william_image = face_recognition.load_image_file("known_people/William.jpg")
+william_image = face_recognition.load_image_file("known_people/Kout.jpg")
 william_face_encoding = face_recognition.face_encodings(william_image)[0]
 
 # Load a second sample picture and learn how to recognize it.
@@ -43,7 +43,7 @@ known_face_encodings = [
     leandra_face_encoding
 ]
 known_face_names = [
-    "William",
+    "Kout_W",
     "Dimitrios",
     "Leandra"
 ]
