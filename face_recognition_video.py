@@ -53,7 +53,7 @@ known_face_encodings = [
     leandra_face_encoding
 ]
 known_face_names = [
-    "Kout_W",
+    "William",
     "Dimitrios",
     "Leandra"
 ]
