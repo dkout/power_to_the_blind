@@ -1,6 +1,11 @@
 import face_recognition
 import cv2
 import pyttsx3;
+#emo things:
+from EmoPy.src.fermodel import FERModel
+from pkg_resources import resource_filename
+target_emotions = ['surprise', 'calm', 'fear', 'anger']#calm', 'anger', 'happiness', 'fear', 'sadness', 'disgust']
+model = FERModel(target_emotions, verbose=True)
 
 #text to speech
 engine = pyttsx3.init();
@@ -8,7 +13,7 @@ engine = pyttsx3.init();
 def speakText(textToSpeak):
 	engine.say(textToSpeak);
 	engine.runAndWait() ;
-video_show=False
+video_show=True
 # SET FALSE IF RUNNING IN RASPBERRY PI
 
 
@@ -27,24 +32,22 @@ if (video_capture.isOpened() == False):
   print("Unable to read camera feed")
 else:
     print("Passed video capture initialization")
-
-image_size = 128
 # Load a sample picture and learn how to recognize it.
 william_image = face_recognition.load_image_file("known_people/William.jpg")
-x_scale = y_scale = 128/william_image.shape[0]
+x_scale = y_scale = 264/william_image.shape[0]
 william_image = cv2.resize(william_image, (0,0), fx=x_scale, fy=y_scale)
 william_face_encoding = face_recognition.face_encodings(william_image)[0]
 
 # Load a second sample picture and learn how to recognize it.
 kout_image = face_recognition.load_image_file("known_people/Kout.jpg")
-x_scale = y_scale = 128/kout_image.shape[0]
+x_scale = y_scale = 264/kout_image.shape[0]
 kout_image = cv2.resize(kout_image, (0,0), fx=x_scale, fy=y_scale)
 kout_face_encoding = face_recognition.face_encodings(kout_image)[0]
 
 
 # Load a third sample picture and learn how to recognize it.
 leandra_image = face_recognition.load_image_file("known_people/Leandra.jpg")
-x_scale = y_scale = 128/leandra_image.shape[0]
+x_scale = y_scale = 264/leandra_image.shape[0]
 leandra_image = cv2.resize(leandra_image, (0,0), fx=x_scale, fy=y_scale)
 leandra_face_encoding = face_recognition.face_encodings(leandra_image)[0]
 
@@ -55,7 +58,7 @@ known_face_encodings = [
     leandra_face_encoding
 ]
 known_face_names = [
-    "William",
+    "Kout_W",
     "Dimitrios",
     "Leandra"
 ]
@@ -70,7 +73,7 @@ process_this_frame = True
 lastMatchedPerson = None
 frame_counter = 0
 people_found = []
-video_scale = 0.15
+video_scale = 0.2
 while True:
     if frame_counter >= 50:
         frame_counter=0
@@ -116,11 +119,17 @@ while True:
                     elif center_x > 2*frame_third:
                         relative_location = "to the right"
 
-                    speakText(name + " is " + relative_location + " of you")
-                    print("This is "+name)
+                    file = './image_data/image.jpg'
+                    cv2.imwrite(file, frame)
+
+                    feeling_string = model.predict(file)
+
+                    speakText(name + " is " + relative_location + " of you. They are feeling: " + feeling_string )
+                    print("Found "+name)
+                    print("Feeling: " + feeling_string)
                     people_found.append(name)
 
-    process_this_frame = frame_counter%4==1
+    process_this_frame = frame_counter%5==1
 
 
     # Display the results
