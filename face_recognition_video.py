@@ -9,6 +9,7 @@ def speakText(textToSpeak):
 	engine.say(textToSpeak);
 	engine.runAndWait() ;
 video_show=True
+# SET FALSE IF RUNNING IN RASPBERRY PI
 
 
 # This is a demo of running face recognition on live video from your webcam. It's a little more complicated than the
@@ -24,6 +25,8 @@ video_show=True
 video_capture = cv2.VideoCapture(0)
 if (video_capture.isOpened() == False): 
   print("Unable to read camera feed")
+else:
+    print("Passed video capture initialization")
 # Load a sample picture and learn how to recognize it.
 william_image = face_recognition.load_image_file("known_people/William.jpg")
 x_scale = y_scale = 264/william_image.shape[0]
@@ -50,7 +53,7 @@ known_face_encodings = [
     leandra_face_encoding
 ]
 known_face_names = [
-    "William",
+    "Kout_W",
     "Dimitrios",
     "Leandra"
 ]
@@ -71,6 +74,7 @@ while True:
         frame_counter=0
         people_found = []
     frame_counter+=1
+    #print("Entered while loop")
     # Grab a single frame of video
     ret, frame = video_capture.read()
 
@@ -88,6 +92,7 @@ while True:
 
         face_names = []
         for face_encoding in face_encodings:
+            print("found face")
             # See if the face is a match for the known face(s)
             matches = face_recognition.compare_faces(known_face_encodings, face_encoding)
             name = "Unknown"
@@ -133,7 +138,7 @@ while True:
         cv2.putText(frame, name, (left + 6, bottom - 6), font, 1.0, (255, 255, 255), 1)
 
     # Display the resulting image
-    if video_show ==True:
+    if video_show == True:
         cv2.imshow('Video', frame)
 
     # Hit 'q' on the keyboard to quit!
@@ -142,4 +147,4 @@ while True:
 
 # Release handle to the webcam
 video_capture.release()
-cv2.destroyAllWindows()
+#cv2.destroyAllWindows()
