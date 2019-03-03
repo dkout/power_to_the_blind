@@ -8,7 +8,7 @@ engine = pyttsx3.init();
 def speakText(textToSpeak):
 	engine.say(textToSpeak);
 	engine.runAndWait() ;
-video_show=True
+video_show=False
 # SET FALSE IF RUNNING IN RASPBERRY PI
 
 
